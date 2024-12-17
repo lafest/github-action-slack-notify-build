@@ -9,11 +9,12 @@ A [Slack bot token](https://api.slack.com/docs/token-types) is required to use t
 ## Usage
 
 ```yaml
-uses: justinr636/github-action-slack-notify-build@v1
+uses: lafest/github-action-slack-notify-build@v1
 with:
   channel: app-alerts
   status: STARTED
   color: good
+  custom_message: OneStore 24.10.4.1
 env:
   SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
 ```
