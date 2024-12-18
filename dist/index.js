@@ -1427,6 +1427,7 @@ const { buildSlackAttachments, formatChannelName } = __webpack_require__(543);
     const status = core.getInput('status');
     const color = core.getInput('color');
     const messageId = core.getInput('message_id');
+    const customMessage = core.getInput('custom_message');
     const token = process.env.SLACK_BOT_TOKEN;
     const slack = new WebClient(token);
 
@@ -1435,7 +1436,7 @@ const { buildSlackAttachments, formatChannelName } = __webpack_require__(543);
       return;
     }
 
-    const attachments = buildSlackAttachments({ status, color, github });
+    const attachments = buildSlackAttachments({ status, color, github, customMessage });
     const channelId = core.getInput('channel_id') || (await lookUpChannelId({ slack, channel }));
 
     if (!channelId) {
@@ -12751,7 +12752,7 @@ function hasFirstPage (link) {
 
 const { context } = __webpack_require__(469);
 
-function buildSlackAttachments({ status, color, github }) {
+function buildSlackAttachments({ status, color, github, customMessage }) {
   const { payload, ref, workflow, eventName } = github.context;
   const { owner, repo } = context.repo;
   const event = eventName;
@@ -12796,6 +12797,11 @@ function buildSlackAttachments({ status, color, github }) {
         {
           title: 'Event',
           value: event,
+          short: true,
+        },
+        {
+          title: 'CustomMessage',
+          value: customMessage,
           short: true,
         },
       ],
